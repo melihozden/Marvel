@@ -15,6 +15,13 @@
 		3345982F2730414D000B5497 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3345982E2730414D000B5497 /* Assets.xcassets */; };
 		334598322730414D000B5497 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 334598302730414D000B5497 /* LaunchScreen.storyboard */; };
 		334598352730414D000B5497 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 334598342730414D000B5497 /* main.m */; };
+		337B3CEF2731181E0082237E /* Character.m in Sources */ = {isa = PBXBuildFile; fileRef = 337B3CEE2731181E0082237E /* Character.m */; };
+		337B3CF32731458A0082237E /* CharacterDetailsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 337B3CF22731458A0082237E /* CharacterDetailsVC.m */; };
+		337B3D0E27317B770082237E /* Comic.m in Sources */ = {isa = PBXBuildFile; fileRef = 337B3D0D27317B770082237E /* Comic.m */; };
+		337B3D112731881F0082237E /* ServiceHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 337B3D102731881F0082237E /* ServiceHandler.m */; };
+		33BB3E9B27307865003582E0 /* MarvelApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 33BB3E9A27307865003582E0 /* MarvelApi.m */; };
+		33DC43E52730533300A349A2 /* captainAmerica.png in Resources */ = {isa = PBXBuildFile; fileRef = 33DC43E42730533300A349A2 /* captainAmerica.png */; };
+		33DC43E8273053A000A349A2 /* CharacterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DC43E7273053A000A349A2 /* CharacterCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +38,19 @@
 		334598312730414D000B5497 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		334598332730414D000B5497 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		334598342730414D000B5497 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		337B3CED2731181E0082237E /* Character.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Character.h; sourceTree = "<group>"; };
+		337B3CEE2731181E0082237E /* Character.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Character.m; sourceTree = "<group>"; };
+		337B3CF12731458A0082237E /* CharacterDetailsVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CharacterDetailsVC.h; sourceTree = "<group>"; };
+		337B3CF22731458A0082237E /* CharacterDetailsVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CharacterDetailsVC.m; sourceTree = "<group>"; };
+		337B3D0C27317B770082237E /* Comic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Comic.h; sourceTree = "<group>"; };
+		337B3D0D27317B770082237E /* Comic.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Comic.m; sourceTree = "<group>"; };
+		337B3D0F2731881F0082237E /* ServiceHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServiceHandler.h; sourceTree = "<group>"; };
+		337B3D102731881F0082237E /* ServiceHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ServiceHandler.m; sourceTree = "<group>"; };
+		33BB3E9927307865003582E0 /* MarvelApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MarvelApi.h; sourceTree = "<group>"; };
+		33BB3E9A27307865003582E0 /* MarvelApi.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MarvelApi.m; sourceTree = "<group>"; };
+		33DC43E42730533300A349A2 /* captainAmerica.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = captainAmerica.png; sourceTree = "<group>"; };
+		33DC43E6273053A000A349A2 /* CharacterCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CharacterCell.h; sourceTree = "<group>"; };
+		33DC43E7273053A000A349A2 /* CharacterCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CharacterCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +83,9 @@
 		3345981E2730414C000B5497 /* Marvel */ = {
 			isa = PBXGroup;
 			children = (
+				337B3CF02731454B0082237E /* CharacterDetailsVC */,
+				337B3CEC273118040082237E /* Models */,
+				33DC43E22730513800A349A2 /* CharacterCell */,
 				3345983B27304209000B5497 /* Service */,
 				3345981F2730414C000B5497 /* AppDelegate.h */,
 				334598202730414C000B5497 /* AppDelegate.m */,
@@ -75,6 +98,7 @@
 				334598302730414D000B5497 /* LaunchScreen.storyboard */,
 				334598332730414D000B5497 /* Info.plist */,
 				334598342730414D000B5497 /* main.m */,
+				33DC43E32730531E00A349A2 /* Images */,
 				3345982B2730414C000B5497 /* Marvel.xcdatamodeld */,
 			);
 			path = Marvel;
@@ -83,8 +107,49 @@
 		3345983B27304209000B5497 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				33BB3E9927307865003582E0 /* MarvelApi.h */,
+				33BB3E9A27307865003582E0 /* MarvelApi.m */,
+				337B3D0F2731881F0082237E /* ServiceHandler.h */,
+				337B3D102731881F0082237E /* ServiceHandler.m */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		337B3CEC273118040082237E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				337B3CED2731181E0082237E /* Character.h */,
+				337B3CEE2731181E0082237E /* Character.m */,
+				337B3D0C27317B770082237E /* Comic.h */,
+				337B3D0D27317B770082237E /* Comic.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		337B3CF02731454B0082237E /* CharacterDetailsVC */ = {
+			isa = PBXGroup;
+			children = (
+				337B3CF12731458A0082237E /* CharacterDetailsVC.h */,
+				337B3CF22731458A0082237E /* CharacterDetailsVC.m */,
+			);
+			path = CharacterDetailsVC;
+			sourceTree = "<group>";
+		};
+		33DC43E22730513800A349A2 /* CharacterCell */ = {
+			isa = PBXGroup;
+			children = (
+				33DC43E6273053A000A349A2 /* CharacterCell.h */,
+				33DC43E7273053A000A349A2 /* CharacterCell.m */,
+			);
+			path = CharacterCell;
+			sourceTree = "<group>";
+		};
+		33DC43E32730531E00A349A2 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				33DC43E42730533300A349A2 /* captainAmerica.png */,
+			);
+			path = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -147,6 +212,7 @@
 				334598322730414D000B5497 /* LaunchScreen.storyboard in Resources */,
 				3345982F2730414D000B5497 /* Assets.xcassets in Resources */,
 				3345982A2730414C000B5497 /* Main.storyboard in Resources */,
+				33DC43E52730533300A349A2 /* captainAmerica.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -158,10 +224,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				334598352730414D000B5497 /* main.m in Sources */,
+				337B3D112731881F0082237E /* ServiceHandler.m in Sources */,
 				334598272730414C000B5497 /* ViewController.m in Sources */,
+				33BB3E9B27307865003582E0 /* MarvelApi.m in Sources */,
+				337B3CEF2731181E0082237E /* Character.m in Sources */,
 				334598212730414C000B5497 /* AppDelegate.m in Sources */,
+				33DC43E8273053A000A349A2 /* CharacterCell.m in Sources */,
+				337B3CF32731458A0082237E /* CharacterDetailsVC.m in Sources */,
 				3345982D2730414C000B5497 /* Marvel.xcdatamodeld in Sources */,
 				334598242730414C000B5497 /* SceneDelegate.m in Sources */,
+				337B3D0E27317B770082237E /* Comic.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,6 +384,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -322,7 +395,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = melihozden.Marvel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -339,6 +412,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -349,7 +423,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = melihozden.Marvel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
