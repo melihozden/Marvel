@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		331C54B12731D22D00C20798 /* MainCVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 331C54B02731D22D00C20798 /* MainCVC.m */; };
 		334598212730414C000B5497 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 334598202730414C000B5497 /* AppDelegate.m */; };
 		334598242730414C000B5497 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 334598232730414C000B5497 /* SceneDelegate.m */; };
-		334598272730414C000B5497 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 334598262730414C000B5497 /* ViewController.m */; };
 		3345982A2730414C000B5497 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 334598282730414C000B5497 /* Main.storyboard */; };
 		3345982D2730414C000B5497 /* Marvel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3345982B2730414C000B5497 /* Marvel.xcdatamodeld */; };
 		3345982F2730414D000B5497 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3345982E2730414D000B5497 /* Assets.xcassets */; };
@@ -25,13 +25,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		331C54AF2731D22D00C20798 /* MainCVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainCVC.h; sourceTree = "<group>"; };
+		331C54B02731D22D00C20798 /* MainCVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainCVC.m; sourceTree = "<group>"; };
 		3345981C2730414C000B5497 /* Marvel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Marvel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3345981F2730414C000B5497 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		334598202730414C000B5497 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		334598222730414C000B5497 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
 		334598232730414C000B5497 /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
-		334598252730414C000B5497 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		334598262730414C000B5497 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		334598292730414C000B5497 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3345982C2730414C000B5497 /* Marvel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Marvel.xcdatamodel; sourceTree = "<group>"; };
 		3345982E2730414D000B5497 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -91,8 +91,8 @@
 				334598202730414C000B5497 /* AppDelegate.m */,
 				334598222730414C000B5497 /* SceneDelegate.h */,
 				334598232730414C000B5497 /* SceneDelegate.m */,
-				334598252730414C000B5497 /* ViewController.h */,
-				334598262730414C000B5497 /* ViewController.m */,
+				331C54AF2731D22D00C20798 /* MainCVC.h */,
+				331C54B02731D22D00C20798 /* MainCVC.m */,
 				334598282730414C000B5497 /* Main.storyboard */,
 				3345982E2730414D000B5497 /* Assets.xcassets */,
 				334598302730414D000B5497 /* LaunchScreen.storyboard */,
@@ -224,8 +224,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				334598352730414D000B5497 /* main.m in Sources */,
+				331C54B12731D22D00C20798 /* MainCVC.m in Sources */,
 				337B3D112731881F0082237E /* ServiceHandler.m in Sources */,
-				334598272730414C000B5497 /* ViewController.m in Sources */,
 				33BB3E9B27307865003582E0 /* MarvelApi.m in Sources */,
 				337B3CEF2731181E0082237E /* Character.m in Sources */,
 				334598212730414C000B5497 /* AppDelegate.m in Sources */,

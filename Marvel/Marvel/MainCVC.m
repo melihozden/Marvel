@@ -1,24 +1,23 @@
 //
-//  ViewController.m
+//  MainCVC.m
 //  Marvel
 //
-//  Created by Melih Ozden - HB on 1.11.2021.
+//  Created by Melih Ozden - HB on 2.11.2021.
 //
 
-#import "ViewController.h"
+#import "MainCVC.h"
 #import "CharacterCell/CharacterCell.h"
 #import "Models/Character.h"
 
-@interface ViewController ()
+@interface MainCVC ()
+
+@property (strong,nonatomic) NSMutableArray<Character *> *characterArray;
 
 @end
 
-@implementation ViewController
+@implementation MainCVC
 
-@synthesize collectionView;
-@synthesize characterArray;
-
-NSString *cellId = @"CharacterCell";
+static NSString * const reuseIdentifier = @"Cell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -26,13 +25,12 @@ NSString *cellId = @"CharacterCell";
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     
-    characterArray = [[NSMutableArray alloc] init];
-    
     [self setupStatusBar];
     [self setupNavBar];
     [self setupUI];
     [self getCharacters];
     
+    // Do any additional setup after loading the view.
 }
 
 - (void) setupUI{
@@ -81,10 +79,75 @@ NSString *cellId = @"CharacterCell";
     }
 }
 
-#pragma mark - Service Call
+#pragma mark <UICollectionViewDataSource>
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 1;
+}
+
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return self.characterArray.count;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    CharacterCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
+   
+    Character *character = [[Character alloc] init];
+    
+    NSLog(@"%l",(long)indexPath.row);
+    character = [self.characterArray objectAtIndex:indexPath.row];
+    
+    cell.layer.shadowColor = UIColor.grayColor.CGColor;
+    cell.layer.shadowOffset = CGSizeMake(5.0, 5.0);
+    cell.layer.shadowRadius = 25.0;
+    cell.layer.shadowOpacity = 0.9;
+    cell.layer.cornerRadius = 15.0;
+    
+    cell.characterImageView.image = [UIImage imageNamed:@"MarvelLogo.png"];
+    cell.characterNameLabel.text = character.characterName;
+    //cell.characterNameLabel.text = [NSString stringWithFormat:@"%@", character.characterId];
+    
+    // Configure the cell
+    
+    return cell;
+}
+
+#pragma mark <UICollectionViewDelegate>
+
+/*
+// Uncomment this method to specify if the specified item should be highlighted during tracking
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
+	return YES;
+}
+*/
+
+/*
+// Uncomment this method to specify if the specified item should be selected
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+*/
+
+/*
+// Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
+	return NO;
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+	return NO;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+	
+}
+*/
+
+#pragma mark ServiceCall
+
 - (void) getCharacters{
     
-  
     NSURL *url = [NSURL URLWithString:@"https://gateway.marvel.com:443/v1/public/characters?ts=1&apikey=8215eb8802334abdaa903fc72f1d63f6&hash=9552a5213d3898f1943dae384747362b"];
     
     [[NSURLSession.sharedSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
@@ -97,16 +160,19 @@ NSString *cellId = @"CharacterCell";
             return;
         }
         
+        NSMutableArray<Character *> *characterArray = NSMutableArray.new;
         for(NSDictionary *marvelCharacter in marvelCharacterJSON[@"data"][@"results"]){
             
             Character *character = [[Character alloc] init];
             character.characterId = marvelCharacter[@"id"];
             character.characterName = marvelCharacter[@"name"];
             character.characterDescription = marvelCharacter[@"description"];
-            character.characterImage = ;
+            //character.characterImage = ;
             
-            [self.characterArray addObject:character];
+            [characterArray addObject:character];
         }
+        
+        self.characterArray = characterArray;
         
         dispatch_sync(dispatch_get_main_queue(),^{
             
@@ -116,53 +182,6 @@ NSString *cellId = @"CharacterCell";
         
     }] resume];
 }
-
-
-
-#pragma mark - UICollectionViewDataSource
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
-    return 1;
-
-}
-
-- (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.characterArray.count;
-}
-
-- (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    
-    CharacterCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
-    
-    Character *character = self.characterArray[indexPath.row];
-    
-    // cell setup
-    cell.layer.shadowColor = UIColor.lightGrayColor.CGColor;
-    cell.layer.shadowOffset = CGSizeMake(5.0,5.0);
-    cell.layer.shadowRadius = 25.0;
-    cell.layer.shadowOpacity = 0.9;
-    cell.layer.cornerRadius = 15.0;
-    
-    cell.clipsToBounds = true;
-    cell.characterImageView.image = [UIImage imageNamed:@"MarvelLogo.png"];
-    cell.characterImageView.layer.cornerRadius = 15.0;
-    cell.characterNameLabel.text = character.characterName;
-    //cell.characterImageView.image = character.characterImage;
-     
-    return cell;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    
-    //NSLog(@"%d", indexPath.row);
-    
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    
-}
-
-
 
 
 @end
