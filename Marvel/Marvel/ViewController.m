@@ -7,6 +7,7 @@
 
 #import "ViewController.h"
 #import "CharacterCell/CharacterCell.h"
+#import "Models/Character.h"
 
 @interface ViewController ()
 
@@ -15,22 +16,26 @@
 @implementation ViewController
 
 @synthesize collectionView;
+@synthesize characterArray;
+
+NSString *cellId = @"CharacterCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.collectionView.delegate = self;
+    self.collectionView.dataSource = self;
+    
+    characterArray = [[NSMutableArray alloc] init];
     
     [self setupStatusBar];
     [self setupNavBar];
     [self setupUI];
-    
+    [self getCharacters];
     
 }
 
 - (void) setupUI{
-    
-    self.collectionView.delegate = self;
-    self.collectionView.dataSource = self;
     
     self.collectionView.backgroundColor = [UIColor blackColor];
     
@@ -77,6 +82,40 @@
 }
 
 #pragma mark - Service Call
+- (void) getCharacters{
+    
+  
+    NSURL *url = [NSURL URLWithString:@"https://gateway.marvel.com:443/v1/public/characters?ts=1&apikey=8215eb8802334abdaa903fc72f1d63f6&hash=9552a5213d3898f1943dae384747362b"];
+    
+    [[NSURLSession.sharedSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        
+        NSError *err ;
+        NSDictionary *marvelCharacterJSON = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&err];
+        
+        if (err){
+            NSLog(@"Failed %@",err);
+            return;
+        }
+        
+        for(NSDictionary *marvelCharacter in marvelCharacterJSON[@"data"][@"results"]){
+            
+            Character *character = [[Character alloc] init];
+            character.characterId = marvelCharacter[@"id"];
+            character.characterName = marvelCharacter[@"name"];
+            character.characterDescription = marvelCharacter[@"description"];
+            character.characterImage = ;
+            
+            [self.characterArray addObject:character];
+        }
+        
+        dispatch_sync(dispatch_get_main_queue(),^{
+            
+            [self.collectionView reloadData];
+            
+        });
+        
+    }] resume];
+}
 
 
 
@@ -84,16 +123,18 @@
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
     return 1;
+
 }
 
 - (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 15;
+    return self.characterArray.count;
 }
 
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     
-    NSString *cellIdentifier = @"CharacterCell";
-        CharacterCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    CharacterCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
+    
+    Character *character = self.characterArray[indexPath.row];
     
     // cell setup
     cell.layer.shadowColor = UIColor.lightGrayColor.CGColor;
@@ -102,10 +143,11 @@
     cell.layer.shadowOpacity = 0.9;
     cell.layer.cornerRadius = 15.0;
     
-    cell.clipsToBounds = false;
+    cell.clipsToBounds = true;
     cell.characterImageView.image = [UIImage imageNamed:@"MarvelLogo.png"];
     cell.characterImageView.layer.cornerRadius = 15.0;
-    cell.characterNameLabel.text = @"Deneme";
+    cell.characterNameLabel.text = character.characterName;
+    //cell.characterImageView.image = character.characterImage;
      
     return cell;
 }
@@ -119,6 +161,8 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
 }
+
+
 
 
 @end
