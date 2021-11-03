@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ServiceHandler : NSObject
 
 @property MarvelApi *marvelApi;
-
+//- (NSMutableArray *) getCharactersMarvel;
 
 @end
 

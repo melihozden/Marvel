@@ -13,6 +13,11 @@ NS_ASSUME_NONNULL_BEGIN
 @interface CharacterDetailsVC : UIViewController
 
 @property (strong, nonatomic) Character *selectedCharacter;
+@property (weak, nonatomic) IBOutlet UIImageView *characterDetailImageView;
+@property (weak, nonatomic) IBOutlet UILabel *characterDetailTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *characterDetailDescriptionLabel;
+@property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
+- (IBAction)favoriteBtnTapped:(id)sender;
 
 @end
 

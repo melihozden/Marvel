@@ -8,10 +8,14 @@
 #import "MainCVC.h"
 #import "CharacterCell/CharacterCell.h"
 #import "Models/Character.h"
+#import "Service/ServiceHandler.h"
+#import "SDWebImage/SDWebImage.h"
+#import "CharacterDetailsVC/CharacterDetailsVC.h"
 
 @interface MainCVC ()
 
 @property (strong,nonatomic) NSMutableArray *characterArray;
+//@property (assign,nonatomic) NSInteger selectedCharacterIndex;
 
 @end
 
@@ -28,9 +32,11 @@ static NSString * const reuseIdentifier = @"Cell";
     [self setupStatusBar];
     [self setupNavBar];
     [self setupUI];
-    [self getCharacters];
     
-    // Do any additional setup after loading the view.
+//    ServiceHandler *serviceHandler = [[ServiceHandler alloc] init];
+//    [serviceHandler getCharactersMarvel];
+    
+    [self getCharacters];
 }
 
 - (void) setupUI{
@@ -96,60 +102,37 @@ static NSString * const reuseIdentifier = @"Cell";
    
     Character *character = [self.characterArray objectAtIndex:indexPath.row];
     
-    //NSLog(@"%l",(long)indexPath.row);
-    //character = self.characterArray[indexPath.row];
+    NSURL *url = [NSURL URLWithString:character.characterImageString];  // Get image URL from string
     
-    cell.layer.shadowColor = UIColor.grayColor.CGColor;
-    cell.layer.shadowOffset = CGSizeMake(5.0, 5.0);
-    cell.layer.shadowRadius = 25.0;
-    cell.layer.shadowOpacity = 0.9;
-    cell.layer.cornerRadius = 15.0;
+      // Shadowing
+//    cell.characterImageView.layer.shadowColor = UIColor.grayColor.CGColor;
+//    cell.characterImageView.layer.shadowOffset = CGSizeMake(25.0, 25.0);
+//    cell.characterImageView.layer.shadowRadius = 15.0;
+//    cell.characterImageView.layer.shadowOpacity = 0.75;
+    cell.characterImageView.layer.cornerRadius = 10.0;
     
-    cell.characterImageView.image = [UIImage imageNamed:@"MarvelLogo.png"];
+    
     cell.characterNameLabel.text = character.characterName;
-    //cell.characterNameLabel.text = [NSString stringWithFormat:@"%@", character.characterId];
-    
-    // Configure the cell
+    [cell.characterImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"MarvelLogo.png"]];
     
     return cell;
 }
 
-#pragma mark <UICollectionViewDelegate>
-
-/*
-// Uncomment this method to specify if the specified item should be highlighted during tracking
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-	return YES;
-}
-*/
-
-/*
-// Uncomment this method to specify if the specified item should be selected
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-*/
-
-/*
-// Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
-	return NO;
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    CharacterDetailsVC *characterDetailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"characterDetailVC"];
+    characterDetailVC.selectedCharacter = [self.characterArray objectAtIndex:indexPath.row];
+    
+    [self.navigationController pushViewController:characterDetailVC animated:YES];
+    
 }
 
-- (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	return NO;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	
-}
-*/
-
+// - IMPORTANT - Bu bölümün service handler'da yapılması gerekiyor normalde ama ServiceHandler'dan array return yapamadım bir türlü Alamofire ile test edilecek.
 #pragma mark ServiceCall
 
 - (void) getCharacters{
     
-    NSURL *url = [NSURL URLWithString:@"https://gateway.marvel.com:443/v1/public/characters?ts=1&apikey=8215eb8802334abdaa903fc72f1d63f6&hash=9552a5213d3898f1943dae384747362b"];
+    NSURL *url = [NSURL URLWithString:@"https://gateway.marvel.com:443/v1/public/characters?&ts=1&apikey=8215eb8802334abdaa903fc72f1d63f6&hash=9552a5213d3898f1943dae384747362b"];
     
     [[NSURLSession.sharedSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         
@@ -166,16 +149,26 @@ static NSString * const reuseIdentifier = @"Cell";
         //NSMutableArray<Character *> *characterArray = NSMutableArray.new;
         for(NSDictionary *marvelCharacter in marvelCharacterJSON[@"data"][@"results"]){
             
+            NSString *imageString = [NSString stringWithFormat:@"%@.%@",marvelCharacter[@"thumbnail"][@"path"],marvelCharacter[@"thumbnail"][@"extension"]];
+            
             Character *character = [[Character alloc] init];
             character.characterId = marvelCharacter[@"id"];
             character.characterName = marvelCharacter[@"name"];
             character.characterDescription = marvelCharacter[@"description"];
-            //character.characterImage = ;
+            character.characterImageString = imageString;
+            
+            // Characters comic 0,1,2,3,4,5
+//            for(NSDictionary *comics in marvelCharacterJSON[@"data"][@"results"][0][@"comics"][@"items"]){
+//
+//                NSString *comicName = comics[@"name"];
+//
+//                [character.comics addObject:comicName];   // can't add ??
+//
+//            }
             
             [self.characterArray addObject:character];
+            
         }
-        
-        //self.characterArray = characterArray;
         
         dispatch_sync(dispatch_get_main_queue(),^{
             
@@ -185,6 +178,5 @@ static NSString * const reuseIdentifier = @"Cell";
         
     }] resume];
 }
-
 
 @end

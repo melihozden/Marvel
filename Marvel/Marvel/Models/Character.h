@@ -6,18 +6,17 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface Character : NSObject
 
-@property NSNumber *characterId;
-@property (strong, nonatomic) UIImage *characterImage;          // Character thumbnail
+@property NSNumber *characterId;                                  // Character ID
+@property (strong, nonatomic) NSString *characterImageString;     // Character thumbnail
 @property (strong, nonatomic) NSString *characterName;            // Name of each character
 @property (strong, nonatomic) NSString *characterDescription;     // Description of each character
 
-@property (strong, nonatomic) NSArray *comics;                    // Comics Array
+@property (strong, nonatomic) NSMutableArray *comics;             // Comics Array
 
 @end
 

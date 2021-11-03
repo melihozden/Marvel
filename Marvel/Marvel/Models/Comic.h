@@ -11,7 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Comic : NSObject
 
-@property (weak, nonatomic) NSString *comicName;
+@property (strong, nonatomic) NSString *comicName;
 
 @end
 
