@@ -21,7 +21,9 @@
 
 - (void) getCharacters{
     
+    NSLog(@"%@",API_KEY);
     
+    //@"url+marvelApi.apikey";
     
 }
 

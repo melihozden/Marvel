@@ -14,10 +14,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property NSNumber *characterId;
 @property (strong, nonatomic) UIImage *characterImage;          // Character thumbnail
-@property (weak, nonatomic) NSString *characterName;            // Name of each character
-@property (weak, nonatomic) NSString *characterDescription;     // Description of each character
+@property (strong, nonatomic) NSString *characterName;            // Name of each character
+@property (strong, nonatomic) NSString *characterDescription;     // Description of each character
 
-@property (weak, nonatomic) NSArray *comics;                    // Comics Array
+@property (strong, nonatomic) NSArray *comics;                    // Comics Array
 
 @end
 

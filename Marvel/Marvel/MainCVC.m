@@ -11,7 +11,7 @@
 
 @interface MainCVC ()
 
-@property (strong,nonatomic) NSMutableArray<Character *> *characterArray;
+@property (strong,nonatomic) NSMutableArray *characterArray;
 
 @end
 
@@ -91,12 +91,13 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
     CharacterCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
    
-    Character *character = [[Character alloc] init];
+    Character *character = [self.characterArray objectAtIndex:indexPath.row];
     
-    NSLog(@"%l",(long)indexPath.row);
-    character = [self.characterArray objectAtIndex:indexPath.row];
+    //NSLog(@"%l",(long)indexPath.row);
+    //character = self.characterArray[indexPath.row];
     
     cell.layer.shadowColor = UIColor.grayColor.CGColor;
     cell.layer.shadowOffset = CGSizeMake(5.0, 5.0);
@@ -155,12 +156,14 @@ static NSString * const reuseIdentifier = @"Cell";
         NSError *err ;
         NSDictionary *marvelCharacterJSON = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&err];
         
+        self.characterArray = [[NSMutableArray alloc] init];
+        
         if (err){
             NSLog(@"Failed %@",err);
             return;
         }
         
-        NSMutableArray<Character *> *characterArray = NSMutableArray.new;
+        //NSMutableArray<Character *> *characterArray = NSMutableArray.new;
         for(NSDictionary *marvelCharacter in marvelCharacterJSON[@"data"][@"results"]){
             
             Character *character = [[Character alloc] init];
@@ -169,10 +172,10 @@ static NSString * const reuseIdentifier = @"Cell";
             character.characterDescription = marvelCharacter[@"description"];
             //character.characterImage = ;
             
-            [characterArray addObject:character];
+            [self.characterArray addObject:character];
         }
         
-        self.characterArray = characterArray;
+        //self.characterArray = characterArray;
         
         dispatch_sync(dispatch_get_main_queue(),^{
             

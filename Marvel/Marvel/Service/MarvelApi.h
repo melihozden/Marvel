@@ -7,6 +7,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define API_KEY @"8215eb8802334abdaa903fc72f1d63f6"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MarvelApi : NSObject
