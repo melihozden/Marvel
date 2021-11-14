@@ -7,13 +7,13 @@
 
 #import <Foundation/Foundation.h>
 #import "MarvelApi.h"
+#import "AFNetworking.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ServiceHandler : NSObject
 
-@property MarvelApi *marvelApi;
-//- (NSMutableArray *) getCharactersMarvel;
+- (void)getCharacters:(NSString *)requestURL completion:(void (^)(NSDictionary *, NSError *))completion;
 
 @end
 

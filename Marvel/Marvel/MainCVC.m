@@ -8,6 +8,7 @@
 #import "MainCVC.h"
 #import "CharacterCell/CharacterCell.h"
 #import "Models/Character.h"
+#import "Service/MarvelApi.h"
 #import "Service/ServiceHandler.h"
 #import "SDWebImage/SDWebImage.h"
 #import "CharacterDetailsVC/CharacterDetailsVC.h"
@@ -15,7 +16,7 @@
 @interface MainCVC ()
 
 @property (strong,nonatomic) NSMutableArray *characterArray;
-//@property (assign,nonatomic) NSInteger selectedCharacterIndex;
+@property (strong,nonatomic) NSDictionary *characterDictionary;
 
 @end
 
@@ -32,9 +33,6 @@ static NSString * const reuseIdentifier = @"Cell";
     [self setupStatusBar];
     [self setupNavBar];
     [self setupUI];
-    
-//    ServiceHandler *serviceHandler = [[ServiceHandler alloc] init];
-//    [serviceHandler getCharactersMarvel];
     
     [self getCharacters];
 }
@@ -111,7 +109,6 @@ static NSString * const reuseIdentifier = @"Cell";
 //    cell.characterImageView.layer.shadowOpacity = 0.75;
     cell.characterImageView.layer.cornerRadius = 10.0;
     
-    
     cell.characterNameLabel.text = character.characterName;
     [cell.characterImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"MarvelLogo.png"]];
     
@@ -127,56 +124,36 @@ static NSString * const reuseIdentifier = @"Cell";
     
 }
 
-// - IMPORTANT - Bu bölümün service handler'da yapılması gerekiyor normalde ama ServiceHandler'dan array return yapamadım bir türlü Alamofire ile test edilecek.
 #pragma mark ServiceCall
-
 - (void) getCharacters{
+   
+    self.characterArray = [[NSMutableArray alloc] init];
     
-    NSURL *url = [NSURL URLWithString:@"https://gateway.marvel.com:443/v1/public/characters?&ts=1&apikey=8215eb8802334abdaa903fc72f1d63f6&hash=9552a5213d3898f1943dae384747362b"];
+    MarvelApi *marvelApi = [[MarvelApi alloc] init];
     
-    [[NSURLSession.sharedSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    ServiceHandler *serviceHandler = [[ServiceHandler alloc] init];
+    [serviceHandler getCharacters:[NSString stringWithFormat:@"%@/v1/public/characters?ts=%@&apikey=%@&hash=%@",marvelApi.baseURL,marvelApi.timeStamp,marvelApi.apiKey,marvelApi.hashKey] completion:^(NSDictionary * _Nonnull dictionary, NSError * _Nonnull error) {
         
-        NSError *err ;
-        NSDictionary *marvelCharacterJSON = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&err];
+        self.characterDictionary = dictionary;
         
-        self.characterArray = [[NSMutableArray alloc] init];
+        for(NSDictionary *marvelCharacter in self.characterDictionary){
         
-        if (err){
-            NSLog(@"Failed %@",err);
-            return;
-        }
-        
-        //NSMutableArray<Character *> *characterArray = NSMutableArray.new;
-        for(NSDictionary *marvelCharacter in marvelCharacterJSON[@"data"][@"results"]){
-            
             NSString *imageString = [NSString stringWithFormat:@"%@.%@",marvelCharacter[@"thumbnail"][@"path"],marvelCharacter[@"thumbnail"][@"extension"]];
-            
+
             Character *character = [[Character alloc] init];
             character.characterId = marvelCharacter[@"id"];
             character.characterName = marvelCharacter[@"name"];
             character.characterDescription = marvelCharacter[@"description"];
             character.characterImageString = imageString;
             
-            // Characters comic 0,1,2,3,4,5
-//            for(NSDictionary *comics in marvelCharacterJSON[@"data"][@"results"][0][@"comics"][@"items"]){
-//
-//                NSString *comicName = comics[@"name"];
-//
-//                [character.comics addObject:comicName];   // can't add ??
-//
-//            }
-            
             [self.characterArray addObject:character];
-            
         }
+        dispatch_async(dispatch_get_main_queue(),^{
         
-        dispatch_sync(dispatch_get_main_queue(),^{
-            
             [self.collectionView reloadData];
-            
-        });
         
-    }] resume];
+        });
+     }];
 }
 
 @end
